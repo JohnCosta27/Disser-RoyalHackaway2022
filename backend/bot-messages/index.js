@@ -11,6 +11,7 @@ const phrases = {
 	"intro": "Generate a tweet from the perspective of someone with these characteristics:",
 	"replyMessagesIntro": "Reply to these tweets with the perspective of someone with these characteristics:",
 	"end": "Tweet:",
+	"endReply": "Tweet Reply:"
 };
 
 /**
@@ -29,7 +30,7 @@ const generateDiss = async (characteristics, replies = null) => {
 		repliesString = replies.map(x => `${x.username}: ${x.text}`).join("\n");
 		// for whether or not the diss is being randomly generated or is replying to a tweet
 	}
-	let promptSent = `${replies ? phrases.replyMessagesIntro : phrases.intro}\n${characteristics.text}\n${replies ? '\n'+repliesString+'\n' : ''}${phrases.end}`;
+	let promptSent = `${replies ? phrases.replyMessagesIntro : phrases.intro}\n${characteristics.text}\n${replies ? '\n'+repliesString+'\n' : ''}${replies ? phrases.endReply : phrases.end}`;
 	
 	const response = await openai.createCompletion("text-davinci-001", {
 		prompt: promptSent,
@@ -46,4 +47,4 @@ const generateDiss = async (characteristics, replies = null) => {
 
 
 //generateDiss(prompts[0]);
-generateDiss(prompts[0], [{"username": "bidenlover69", "text": "I think that obama is a good guy"}]);
+generateDiss(prompts[0], [{"username": "bidenlover69", "text": "I love what biden is doing"}]);
