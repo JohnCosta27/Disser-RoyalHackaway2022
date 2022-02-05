@@ -3,6 +3,7 @@ const dissRouter = require('./routes/diss.router');
 const authRouter = require('./routes/auth.router');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config()
 
 const app = express();
 
