@@ -47,7 +47,21 @@ const generateDiss = async (characteristics, replies = null) => {
 	return response;
 }
 
-
+/**
+ * 
+ * 
+ * @param {Object<text, intensity>} characteristics 
+ * @param {Array[Object<username, text>]} replies 
+ */
+const replyToDiss = async (botID, messageID) => {
+	let dissText = "";
+	const newDiss = await prisma.user.disses({
+		data: {
+			diss: dissTest,
+			user: botUser,
+		},
+	})
+}
 
 //generateDiss(prompts[0]);
 generateDiss(prompts[0], [{ "username": "bidenlover69", "text": "I love what biden is doing" }]);
