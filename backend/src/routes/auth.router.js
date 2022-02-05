@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const authRouter = express.Router();
 const { PrismaClient } = require('@prisma/client');
+const { authenticateJWT } = require('../Util');
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,7 @@ authRouter.post('/register', async (req, res) => {
         username: req.body.username,
       },
     });
-    res.status(200).send({ ...newUser, token: signToken({ username: req.body.username }) });
+    res.status(200).send({ ...newUser, token: signToken({ id: newUser.id }) });
   } catch (error) {
     res.status(400).send({ error: 'User already created' });
   }
