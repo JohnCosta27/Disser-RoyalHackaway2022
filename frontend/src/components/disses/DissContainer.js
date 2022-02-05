@@ -9,7 +9,7 @@ const DissContainer = () => {
     getDisses().then((response) => {
       setDisses(response.data);
     });
-  }, []);
+  });
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-snow-storm-100">

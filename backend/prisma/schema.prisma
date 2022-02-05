@@ -13,7 +13,7 @@ datasource db {
 model users {
   id       String   @id @default(uuid())
   email    String   @unique
-  username String
+  username String   @unique
   disses   disses[]
 }
 

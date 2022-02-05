@@ -21,6 +21,20 @@ authRouter.post('/register', async (req, res) => {
   }
 });
 
+authRouter.post('/login', async (req, res) => {
+  try {
+    const user = await prisma.users.findUnique({
+      where: {
+        username: req.body.username,
+      },
+    });
+    res.status(200).send({ ...user, token: signToken({ id: user.id }) });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: 'Credentials invalid' });
+  }
+});
+
 const signToken = (payload) => {
   return jwt.sign(payload, process.env.SECRET);
 };
