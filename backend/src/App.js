@@ -1,17 +1,11 @@
 const express = require('express');
+const dissRouter = require('./routes/diss.router');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-const { PrismaClient } = require('@prisma/client');
-
-const prisma = new PrismaClient();
-
-prisma.testing.create({
-  data: {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-  },
-});
+app.use(bodyParser.json());
+app.use('/diss', dissRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({ data: 'Hello World' });
