@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { postDiss } from '../../api/ApliClient';
+import { postDiss, postReply } from '../../api/ApliClient';
+import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
-const Feed = ({ className }) => {
+const FeedReply = ({ className }) => {
   const [diss, setDiss] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (e) => {
     setDiss(e.target.value);
   };
 
-  const handleSubmitDiss = (e) => {
+  const handleReplyDiss = (e) => {
     e.preventDefault();
-    postDiss(diss).then((response) => {
+    postReply(searchParams.get('dissId'), diss).then((response) => {
       console.log(response);
     });
   };
@@ -22,7 +24,7 @@ const Feed = ({ className }) => {
         'flex flex-col w-full h-full gap-2 bg-white rounded shadow-lg p-4 justify-center',
         className
       )}
-      onSubmit={handleSubmitDiss}>
+      onSubmit={handleReplyDiss}>
       <h1 className="text-4xl text-purple-500 text-center">Say something :)</h1>
       <textarea
         type="text"
@@ -39,4 +41,4 @@ const Feed = ({ className }) => {
     </form>
   );
 };
-export default Feed;
+export default FeedReply;

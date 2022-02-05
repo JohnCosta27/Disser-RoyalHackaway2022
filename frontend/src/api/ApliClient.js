@@ -27,3 +27,30 @@ export const postLogin = (username) => {
     username: username,
   });
 };
+
+export const getResponses = (dissId) => {
+  return axios.get(`${backendUrl}/diss/replies`, {
+    params: {
+      dissId: dissId,
+    },
+  });
+};
+
+export const postReply = (originalDiss, diss) => {
+  console.log({
+    originalDiss: originalDiss,
+    diss: diss,
+  });
+  return axios.post(
+    `${backendUrl}/diss/reply`,
+    {
+      originalDiss: originalDiss,
+      diss: diss,
+    },
+    {
+      headers: {
+        Authorization: getAccessToken(),
+      },
+    }
+  );
+};
