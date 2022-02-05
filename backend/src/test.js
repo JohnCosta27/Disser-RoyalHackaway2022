@@ -2,14 +2,27 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-prisma.disses
-  .create({
-    data: {
-      diss: 'This is a reply to testing #1',
-      userId: 'a5eb24f8-ecef-40b3-8491-a386e9839dad',
-      originalDiss: '51a8b089-ff61-43b0-b312-3953a823347b',
+const originalDiss = '9ab1bef8-6991-47e8-a281-59c40a99c194';
+
+const getResponses = async (dissId, responses) => {
+  const newResponses = await prisma.disses.findMany({
+    where: {
+      originalDiss: dissId,
     },
-  })
-  .then((response) => {
-    console.log(response);
   });
+
+  if (newResponses.length == 0) {
+    return responses;
+  }
+
+  responses = [...newResponses, ...responses];
+
+  for (const diss of newResponses) {
+    return await getResponses(diss.id, responses);
+  }
+};
+
+(async () => {
+  const testing = await getResponses(originalDiss, []);
+  console.log(testing);
+})();
