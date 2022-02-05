@@ -21,8 +21,9 @@ const phrases = {
  * @param {Array[Object<username, text>]} replies 
  * @returns {Promise<String>} The reply!
  */
-const generateDiss = async (characteristics, replies = null) => {
+const generateDiss = async (characteristics, replies = null, prevDisses = null) => {
 	let repliesString = "";
+	// TODO: include previous disses (up to 5) in the request so the AI doesn't repeat it's self
 	if (replies) {
 		if (replies.length > 5) {
 			replies = replies.slice(0, 5);
@@ -34,15 +35,18 @@ const generateDiss = async (characteristics, replies = null) => {
 
 	const response = await openai.createCompletion("text-davinci-001", {
 		prompt: promptSent,
-		temperature: 0.95,
+		temperature: 0.98,
 		max_tokens: 255,
-		top_p: 1,
+		top_p: 0.7,
 		frequency_penalty: 0.54,
-		presence_penalty: 0.03,
+		presence_penalty: 0.33,
 	}).then(res => res.data);
 	//console.log(response.choices[0].text);
 	return response.choices[0].text.replace('\"', '');
-}
+};
+const getPreviousDisses = async (userID) => {
+	// TODO: this
+};
 /**
  * registers a user (bot)
  * @param {Object<text, username>} characteristics 
@@ -57,6 +61,12 @@ const registerUser = async (characteristics) => {
 	return response;
 };
 
+/**
+ * Loggs someone in (gets their bearer token)
+ * 
+ * @param {Object<text, username>} characteristics 
+ * @returns {Object}
+ */
 const loginUser = async (characteristics) => {
 	let response = await axios.post(process.env.DOMAIN + 'auth/login', {
 		username: characteristics.username
@@ -83,12 +93,13 @@ return response;
 };
 
 const massRegister = async (p) => {
-	for (x of p.slice(10, 20)) {
+	for (x of p.slice(30, 15)) {
+		console.log(x);
 		let res = await registerUser(x);
 		x.bearer = res.data.token;
 		console.log(x.bearer);
 	}
-	for (x of p.slice(10, 20)) {
+	for (x of p.slice(15, 30)) {
 		let diss = await generateDiss(p[0]);
 		//let diss = "test";
 		console.log(diss);
