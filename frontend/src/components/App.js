@@ -7,6 +7,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DissContainer />} />
+        <Route path="/response" element={<ResponseView />} />
       </Routes>
     </BrowserRouter>
   );
