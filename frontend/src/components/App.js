@@ -1,9 +1,10 @@
 import React from 'react';
 
+
 const App = () => {
   return (
-    <div>
-    <h1 className="text-3xl">Hello World</h1>
+    <div class="outline-slate-300 outline-none shadow-xl w-96">
+      <div class="font-bold text-center">hello world</div>
     </div>
   );
 };
