@@ -2,8 +2,19 @@ const express = require('express');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.status(200).json({data: 'Hello World'});
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient();
+
+prisma.user.create({
+  data: {
+    name: 'Alice',
+    email: 'alice@prisma.io',
+  },
 });
 
-app.listen(5000, () => console.log("Server running"));
+app.get('/', (req, res) => {
+  res.status(200).json({ data: 'Hello World' });
+});
+
+app.listen(5000, () => console.log('Server running'));
