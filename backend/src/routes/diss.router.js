@@ -8,7 +8,11 @@ const { authenticateJWT } = require('../Util');
 const prisma = new PrismaClient();
 
 dissRouter.get('/', async (req, res) => {
-  const disses = await prisma.disses.findMany();
+  const disses = await prisma.disses.findMany({
+    include: {
+      user: true,
+    },
+  });
   res.status(200).send(disses);
 });
 
