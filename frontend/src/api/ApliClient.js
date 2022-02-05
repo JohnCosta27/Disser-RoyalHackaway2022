@@ -20,3 +20,9 @@ export const postDiss = (diss) => {
     }
   );
 };
+
+export const postLogin = (username) => {
+  return axios.post(`${backendUrl}/auth/login`, {
+    username: username,
+  });
+};
