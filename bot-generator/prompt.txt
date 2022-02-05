@@ -1,0 +1,15 @@
+## This is the prompt for the AI to generate the different characteristics for the bots!
+
+Generate a series of characteristics for different people. They should be ranging from angry republicans to radical liberals. An intensity score should be given to each person too (ranging from 1-100).
+
+Examples: 
+
+This person is a rampant trump supporter who is campaigning for their state to contribute to build the wall to "keep their country pure". Intensity: 95.
+
+This person is a diehard liberal who believes that the government should do more to help the less fortunate, they are often vocal about their beliefs and support for socialist policies. Intensity: 85.
+
+This person uses 4chan lots and believes he is "black pilled" and he strongly opposes the views of democrats and regularly posts about his hatred for anyone he believes to be inferior to him. Intensity: 99.
+
+------------
+
+This
