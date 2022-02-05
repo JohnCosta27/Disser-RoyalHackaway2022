@@ -12,9 +12,9 @@ const DissContainer = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-snow-storm-100">
-      <div className="w-1/2 min-h-screen h-full flex flex-col items-center p-4">
-        <h1 className="text-2xl">Quitter</h1>
+    <div className="w-full min-h-screen flex flex-col items-center bg-snow-storm-100">
+      <h1 className="text-7xl font-bold text-center">Disser</h1>
+      <div className="w-4/5 grid grid-cols-3 gap-2 items-center p-4">
         {disses.map((diss) => (
           <Diss key={diss.id} diss={diss.diss} name={diss.user.username} />
         ))}
