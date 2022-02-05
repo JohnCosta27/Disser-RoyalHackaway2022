@@ -12,7 +12,6 @@ const DissContainer = () => {
       <Diss diss="Diss 2.0" name="John" />
       <Diss diss="Diss 3.0" name="James" />
       <Diss diss="Diss 4.0" name="Dawg" />
-
     </div>
   );
 

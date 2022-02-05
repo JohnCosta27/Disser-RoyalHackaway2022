@@ -1,10 +1,14 @@
 import React from 'react';
 import DissContainer from './disses/DissContainer';
+import Feed from './disses/Feed';
+import Button from './disses/Button';
 
 const App = () => {
   return (
     <div>
-      <DissContainer />
+      <Feed></Feed>
+      <DissContainer/>
+      <Button></Button>
     </div>
   );
 };
