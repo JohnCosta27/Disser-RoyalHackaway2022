@@ -13,13 +13,16 @@ datasource db {
 model users {
   id       String   @id @default(uuid())
   email    String   @unique
-  username String
+  username String   @unique
   disses   disses[]
 }
 
 model disses {
-  id     String @id @default(uuid())
-  diss   String
-  user   users  @relation(fields: [userId], references: [id])
-  userId String
+  id           String   @id @default(uuid())
+  diss         String
+  user         users    @relation(fields: [userId], references: [id])
+  userId       String
+  responses    disses[] @relation("dissesTodisses")
+  disses       disses?  @relation("dissesTodisses", fields: [originalDiss], references: [id])
+  originalDiss String?
 }
