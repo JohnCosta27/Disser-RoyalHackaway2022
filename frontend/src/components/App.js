@@ -1,14 +1,15 @@
 import React from 'react';
 import DissContainer from './disses/DissContainer';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Feed from './disses/Feed';
+import Button from './disses/Button';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DissContainer />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <Feed></Feed>
+      <DissContainer/>
+      <Button></Button>
+    </div>
   );
 };
 export default App;
