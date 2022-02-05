@@ -4,4 +4,4 @@
 *.ptx
 *.cubin
 *.fatbin
-bot-generator/.env
+backend/bot-messages/.env
