@@ -6,7 +6,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-prisma.user.create({
+prisma.testing.create({
   data: {
     name: 'Alice',
     email: 'alice@prisma.io',
