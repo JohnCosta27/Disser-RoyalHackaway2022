@@ -1,9 +1,8 @@
 import React from 'react';
 import DissContainer from './disses/DissContainer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-  import ResponseView from './ResponseView';
 import Login from './pages/Login';
-  import ResponseView from './ResponseView';
+import ResponseView from './ResponseView';
 
 const App = () => {
   return (
