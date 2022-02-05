@@ -23,15 +23,15 @@ const phrases = {
  */
 const generateDiss = async (characteristics, replies = null) => {
 	let repliesString = "";
-	if(replies){
-		if(replies.length > 5){
+	if (replies) {
+		if (replies.length > 5) {
 			replies = replies.slice(0, 5);
 		}
 		repliesString = replies.map(x => `${x.username}: ${x.text}`).join("\n");
 		// for whether or not the diss is being randomly generated or is replying to a tweet
 	}
-	let promptSent = `${replies ? phrases.replyMessagesIntro : phrases.intro}\n${characteristics.text}\n${replies ? '\n'+repliesString+'\n' : ''}${replies ? phrases.endReply : phrases.end}`;
-	
+	let promptSent = `${replies ? phrases.replyMessagesIntro : phrases.intro}\n${characteristics.text}\n${replies ? '\n' + repliesString + '\n' : ''}${replies ? phrases.endReply : phrases.end}`;
+
 	const response = await openai.createCompletion("text-davinci-001", {
 		prompt: promptSent,
 		temperature: 0.95,
@@ -47,4 +47,4 @@ const generateDiss = async (characteristics, replies = null) => {
 
 
 //generateDiss(prompts[0]);
-generateDiss(prompts[0], [{"username": "bidenlover69", "text": "I love what biden is doing"}]);
+generateDiss(prompts[0], [{ "username": "bidenlover69", "text": "I love what biden is doing" }]);
