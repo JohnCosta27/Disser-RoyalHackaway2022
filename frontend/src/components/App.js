@@ -5,11 +5,12 @@ import Button from './disses/Button';
 
 const App = () => {
   return (
-    <div>
-      <Feed></Feed>
-      <DissContainer/>
-      <Button></Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<DissContainer />} />
+        <Route path="/response" element={<ResponseView />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 export default App;
