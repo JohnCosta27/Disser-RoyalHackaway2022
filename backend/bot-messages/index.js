@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
-const prompts = require("./positivePrompts.json");
+let prompts = require("./positivePrompts.json");
 require('dotenv').config()
-
+const axios = require('axios');
 const configuration = new Configuration({
 	apiKey: process.env.OPENAI_API_KEY,
 });
@@ -40,22 +40,61 @@ const generateDiss = async (characteristics, replies = null) => {
 		frequency_penalty: 0.54,
 		presence_penalty: 0.03,
 	}).then(res => res.data);
-	console.log(response.choices[0].text);
-	return response;
+	//console.log(response.choices[0].text);
+	return response.choices[0].text.replace('\"', '');
 }
-
+/**
+ * registers a user (bot)
+ * @param {Object<text, username>} characteristics 
+ * @returns 
+ */
 const registerUser = async (characteristics) => {
-	let content = {
+	let response = await axios.post(process.env.DOMAIN + 'auth/register', {
 		username: characteristics.username,
 		email: characteristics.username.replace(" ", "") + "@gmail.com"
-	};
-	let response = fetch(process.env.DOMAIN + 'auth/register', {
-		method: 'POST',
-		body: JSON.stringify(content),
-		headers: { 'Content-Type': 'application/json' }
-	});
+	}).catch(err => console.error(err));
+
+	return response;
 };
 
+const loginUser = async (characteristics) => {
+	let response = await axios.post(process.env.DOMAIN + 'auth/login', {
+		username: characteristics.username
+	}).catch(err => console.error(err));
 
+	return response;
+};
+
+/**
+ * sends a diss and returns the obj
+ * @param {String} diss 
+ * @param {String} bearer 
+ * @returns {Object<id, diss, userId>}
+ */
+const sendDiss = async (diss, bearer) => {
+	let response = await axios.post(process.env.DOMAIN + 'diss/create', {
+		"diss": diss,
+	}, {
+		headers: {
+			'Authorization': 'Bearer ' + bearer,
+		}
+	}).catch (err => console.error(err));
+return response;
+};
+
+const massRegister = async (p) => {
+	for (x of p.slice(10, 20)) {
+		let res = await registerUser(x);
+		x.bearer = res.data.token;
+		console.log(x.bearer);
+	}
+	for (x of p.slice(10, 20)) {
+		let diss = await generateDiss(p[0]);
+		//let diss = "test";
+		console.log(diss);
+		sendDiss(diss, x.bearer);
+	}
+}
+massRegister(prompts);
 //generateDiss(prompts[0]);
-generateDiss(prompts[0], [{ "username": "doghater69", "text": "I Hate dogs!" }]);
+//generateDiss(prompts[0], [{ "username": "doghater69", "text": "I Hate dogs!" }]);
