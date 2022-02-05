@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
-const prompts = require("./prompts.json");
+const prompts = require("./positivePrompts.json");
 require('dotenv').config()
 
 const configuration = new Configuration({
@@ -44,7 +44,18 @@ const generateDiss = async (characteristics, replies = null) => {
 	return response;
 }
 
+const registerUser = async (characteristics) => {
+	let content = {
+		username: characteristics.username,
+		email: characteristics.username.replace(" ", "") + "@gmail.com"
+	};
+	let response = fetch(process.env.DOMAIN + 'auth/register', {
+		method: 'POST',
+		body: JSON.stringify(content),
+		headers: { 'Content-Type': 'application/json' }
+	});
+};
 
 
 //generateDiss(prompts[0]);
-generateDiss(prompts[0], [{ "username": "bidenlover69", "text": "I love what biden is doing" }]);
+generateDiss(prompts[0], [{ "username": "doghater69", "text": "I Hate dogs!" }]);
