@@ -12,6 +12,9 @@ dissRouter.get('/', async (req, res) => {
     where: {
       originalDiss: null,
     },
+    orderBy: {
+      timestamp: 'desc',
+    },
     include: {
       user: true,
     },

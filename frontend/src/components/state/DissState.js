@@ -11,7 +11,7 @@ const DissState = ({ children }) => {
   const [disses, setDisses] = useState([]);
 
   const getDissesHandle = async () => {
-    const newDisses = await getDisses();
+    let newDisses = await getDisses();
     setDisses(newDisses.data);
   };
 
