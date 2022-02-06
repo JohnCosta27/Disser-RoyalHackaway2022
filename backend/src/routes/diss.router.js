@@ -55,8 +55,12 @@ dissRouter.post('/create', authenticateJWT, async (req, res) => {
   };
   const newDiss = await prisma.disses.create({
     data: data,
+    include: {
+      user: true,
+      dissesLikes: true,
+    },
   });
-  myEmitter.emit('new-diss', data);
+  emitter.emit('new-diss', newDiss);
   res.status(200).send(newDiss);
 });
 

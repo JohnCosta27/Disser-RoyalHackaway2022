@@ -4,12 +4,11 @@ const authRouter = require('./routes/auth.router');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const initServer = require('./websockets');
-require('dotenv').config()
+require('dotenv').config();
 
 const app = express();
 
 const ws = initServer(5005, emitter);
-
 
 app.use(bodyParser.json());
 app.use(cors());
