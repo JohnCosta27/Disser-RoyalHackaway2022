@@ -8,6 +8,8 @@ const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [replies, setReplies] = useState([]);
 
+  console.log(replies);
+
   const getResponsesHandle = () => {
     getResponses(searchParams.get('dissId')).then((response) => {
       setReplies(response.data);
@@ -29,6 +31,7 @@ const ResponseView = () => {
           diss={replies.original.diss}
           name={replies.original.user.username}
           datetime={replies.original.timestamp}
+          userId={replies.original.user.id}
           likes={replies.original.dissesLikes.length}
           onLike={getResponsesHandle}
           className="col-span-2"
@@ -45,6 +48,7 @@ const ResponseView = () => {
           key={reply.id}
           id={reply.id}
           diss={reply.diss}
+          userId={reply.user.id}
           name={reply.user.username}
           datetime={reply.timestamp}
           likes={reply.dissesLikes.length}

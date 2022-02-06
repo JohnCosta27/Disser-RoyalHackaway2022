@@ -64,3 +64,11 @@ export const postLike = (dissId) => {
     }
   );
 };
+
+export const getUser = (userId) => {
+  return axios.get(`${backendUrl}/auth/user`, {
+    params: {
+      userId: userId,
+    },
+  });
+};

@@ -6,3 +6,8 @@ export const getAccessToken = () => {
 export const setAccessToken = (token) => {
   localStorage.setItem('ACCESS', token);
 };
+
+export const hasValidAccessToken = () => {
+  const token = localStorage.getItem('ACCESS');
+  return token != null;
+};

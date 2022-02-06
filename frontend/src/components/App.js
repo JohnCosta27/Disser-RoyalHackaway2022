@@ -5,14 +5,20 @@ import Login from './pages/Login';
 import ResponseView from './ResponseView';
 import DissState from './state/DissState';
 import MainLayout from './layout/MainLayout';
+import Profile from './pages/Profile';
+import { hasValidAccessToken } from '../api/TokenHandler';
+import ProtectedRoute from './ProtectedRoute';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/response" element={<ResponseView />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/response" element={<ResponseView />} />
       </Routes>
     </BrowserRouter>
   );

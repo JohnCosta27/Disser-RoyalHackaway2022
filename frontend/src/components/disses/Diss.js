@@ -6,7 +6,7 @@ import { HeartIcon } from '@heroicons/react/outline';
 import { postLike } from '../../api/ApliClient';
 import moment from 'moment';
 
-const Diss = ({ id, name, diss, likes, datetime, className, onLike }) => {
+const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike }) => {
   const navigate = useNavigate();
 
   const handleLike = () => {
@@ -26,7 +26,9 @@ const Diss = ({ id, name, diss, likes, datetime, className, onLike }) => {
       )}>
       <div className="w-full">
         <div className="flex justify-between">
-          <div className="rounded bg-blue-200 px-4">
+          <div
+            className="rounded bg-blue-200 px-4"
+            onClick={() => navigate(`/profile?userId=${userId}`)}>
             <h1 className="text-4xl">{name}</h1>
           </div>
           <h3 className="text-xl">{moment(datetime).format('MM/DD/YYYY HH:mm')}</h3>
