@@ -27,13 +27,14 @@ const DissState = ({ children }) => {
 
     ws.addEventListener('message', (e) => {
       let newData = JSON.parse(e.data);
-      newData.newDiss.newDiss = true;
-
-      for (let d of refDisses.current) {
-        d.newDiss = false;
-      }
 
       if (newData.hasOwnProperty('newDiss')) {
+        newData.newDiss.newDiss = true;
+
+        for (let d of refDisses.current) {
+          d.newDiss = false;
+        }
+
         let newDisses = [newData.newDiss, ...refDisses.current];
         refDisses.current = newDisses;
         setDisses(newDisses);

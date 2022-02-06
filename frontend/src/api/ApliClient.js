@@ -1,7 +1,7 @@
-import axios from "axios";
-import { getAccessToken } from "./TokenHandler";
+import axios from 'axios';
+import { getAccessToken } from './TokenHandler';
 
-export const backendUrl = "http://localhost:5000";
+export const backendUrl = 'http://localhost:5000';
 //export const backendUrl = 'http://ventur.live:5000';
 
 export const getDisses = () => {
@@ -25,6 +25,13 @@ export const postDiss = (diss) => {
 export const postLogin = (username) => {
   return axios.post(`${backendUrl}/auth/login`, {
     username: username,
+  });
+};
+
+export const postRegister = (username, email) => {
+  return axios.post(`${backendUrl}/auth/register`, {
+    username: username,
+    email: email,
   });
 };
 

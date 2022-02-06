@@ -1,22 +1,22 @@
 import React from 'react';
+import Logo from '../../img/Ventur.png';
 
 const TopBar = () => {
   return (
     <div className="flex-1 flex flex-col">
       <nav className="px-4 flex justify-between bg-white h-16 border-b-2">
         <ul className="flex items-center">
-          <li className="h-6 w-6">
-            <img
-              className="h-full w-full mx-auto"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/512px-Svelte_Logo.svg.png"
-              alt="Ventur Logo"
-            />
+          <li className="h-16 w-16">
+            <img className="h-full w-full mx-auto" src={Logo} alt="Ventur Logo" />
           </li>
         </ul>
 
         <ul className="flex items-center">
           <li>
-            <h1 className="pl-8 lg:pl-0 text-gray-700">Svelte</h1>
+            <input
+              type="text"
+              className="w-full rounded bg-snow-storm-100 border-2 border-purple-500 p-2 h-12 text-xl transition-all"
+              placeholder="Search..."></input>
           </li>
         </ul>
 
