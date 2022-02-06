@@ -15,9 +15,10 @@ const ResponseView = () => {
   };
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       getResponsesHandle();
     }, 500);
+    return () => clearInterval(interval);
   }, [searchParams.get('dissId')]);
 
   const getOriginal = () => {
