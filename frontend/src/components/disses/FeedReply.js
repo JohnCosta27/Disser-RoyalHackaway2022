@@ -3,7 +3,7 @@ import { postDiss, postReply } from '../../api/ApliClient';
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
-const FeedReply = ({ className }) => {
+const FeedReply = ({ className, refresh }) => {
   const [diss, setDiss] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -15,6 +15,7 @@ const FeedReply = ({ className }) => {
     e.preventDefault();
     postReply(searchParams.get('dissId'), diss).then((response) => {
       console.log(response);
+      refresh();
     });
   };
 

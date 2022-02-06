@@ -8,10 +8,14 @@ const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [replies, setReplies] = useState([]);
 
-  useEffect(() => {
+  const getResponsesHandle = () => {
     getResponses(searchParams.get('dissId')).then((response) => {
       setReplies(response.data);
     });
+  };
+
+  useEffect(() => {
+    getResponsesHandle();
   }, [searchParams.get('dissId')]);
 
   const getOriginal = () => {
@@ -40,7 +44,7 @@ const ResponseView = () => {
     <div className="w-full min-h-screen flex justify-center bg-snow-storm-100">
       <div className="w-3/4 h-full p-4">
         <div className="w-full h-full grid grid-cols-3 gap-4">
-          <FeedReply className="col-span-1" />
+          <FeedReply className="col-span-1" refresh={getResponsesHandle} />
           {getOriginal()}
           <div className="h-36 col-span-3 flex items-end">
             <h1 className="text-5xl">Replies</h1>
