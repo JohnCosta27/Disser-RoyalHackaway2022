@@ -6,7 +6,18 @@ import { HeartIcon } from '@heroicons/react/outline';
 import { postLike } from '../../api/ApliClient';
 import moment from 'moment';
 
-const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike, newDiss }) => {
+const Diss = ({
+  id,
+  name,
+  diss,
+  likes,
+  datetime,
+  userId,
+  className,
+  onLike,
+  newDiss,
+  dissResponses,
+}) => {
   const navigate = useNavigate();
 
   const [border, setBorder] = useState('');
@@ -39,9 +50,9 @@ const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike, newD
       <div className="w-full">
         <div className="flex justify-between">
           <div
-            className="rounded bg-blue-200 px-4"
+            className="rounded bg-blue-200 lg:px-4 sm:px-1"
             onClick={() => navigate(`/profile?userId=${userId}`)}>
-            <h1 className="text-4xl">{name}</h1>
+            <h1 className="text-2xl">{name}</h1>
           </div>
           <h3 className="text-xl">{moment(datetime).format('MM/DD/YYYY HH:mm')}</h3>
         </div>
@@ -54,19 +65,19 @@ const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike, newD
             handleLike();
           }}>
           <div className="w-full">
-            <HeartIcon className="flex w-full h-12 px-2 justify-start" />
+            <HeartIcon className="flex w-full h-6 px-2 justify-start" />
           </div>
           <div className="w-full">
             <p className="text-2xl text-red-500 font-bold">{likes}</p>
           </div>
         </div>
         <div
-          className="w-full flex justify-center items-center"
+          className="w-full flex justify-center items-center hover:bg-green-200 transition-all"
           onClick={() => navigate(`/response?dissId=${id}`)}>
           <div className="mx-2">
-            <ShareIcon className="flex w-full h-12 justify-start" />
+            <ShareIcon className="flex w-full h-6 justify-start" />
           </div>
-          <p className="text-xl text-green-500 font-bold">Reply</p>
+          <p className="text-xl text-green-500 font-bold">Replies: {dissResponses} </p>
         </div>
       </div>
     </div>

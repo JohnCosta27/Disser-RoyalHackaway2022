@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 const emitter = new EventEmitter();
 
 dissRouter.get('/', async (req, res) => {
-  const disses = await prisma.disses.findMany({
+  let disses = await prisma.disses.findMany({
     where: {
       originalDiss: null,
     },
@@ -23,6 +23,10 @@ dissRouter.get('/', async (req, res) => {
       dissesLikes: true,
     },
   });
+  for (let d of disses) {
+    const responses = await getResponses(d.id, []);
+    d.dissesResponses = responses.length;
+  }
   res.status(200).send(disses);
 });
 

@@ -42,6 +42,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
+      favicon: './img/favicon-32x32.png',
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.config().parsed),
