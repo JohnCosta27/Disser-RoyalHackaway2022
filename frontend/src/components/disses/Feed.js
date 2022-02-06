@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { postDiss } from '../../api/ApliClient';
 import clsx from 'clsx';
+import { useDisses } from '../state/DissState';
 
 const Feed = ({ className }) => {
   const [diss, setDiss] = useState('');
+
+  const { getDissesHandle } = useDisses();
 
   const handleChange = (e) => {
     setDiss(e.target.value);
@@ -12,7 +15,7 @@ const Feed = ({ className }) => {
   const handleSubmitDiss = (e) => {
     e.preventDefault();
     postDiss(diss).then((response) => {
-      console.log(response);
+      getDissesHandle();
     });
   };
 

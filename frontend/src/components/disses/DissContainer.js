@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getDisses } from '../../api/ApliClient';
+import DissState, { useDisses } from '../state/DissState';
 import Diss from './Diss';
 import Feed from './Feed';
 
 const DissContainer = () => {
-  const [disses, setDisses] = useState([]);
-
-  useEffect(() => {
-    getDisses().then((response) => {
-      setDisses(response.data);
-    });
-  }, []);
+  const { disses } = useDisses();
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-snow-storm-100">
