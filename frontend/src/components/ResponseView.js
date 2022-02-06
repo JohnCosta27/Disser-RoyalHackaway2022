@@ -24,7 +24,7 @@ const ResponseView = () => {
         <Diss
           diss={replies.original.diss}
           name={replies.original.user.username}
-          className="col-span-2"
+          className="col-span-2 pointer-events-none"
         />
       );
     }

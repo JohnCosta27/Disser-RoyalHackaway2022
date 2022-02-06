@@ -16,7 +16,9 @@ const DissState = ({ children }) => {
   };
 
   useEffect(() => {
-    getDissesHandle();
+    setInterval(() => {
+      getDissesHandle();
+    }, 1000);
   }, []);
 
   return (

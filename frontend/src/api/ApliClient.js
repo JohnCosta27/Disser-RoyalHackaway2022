@@ -37,15 +37,25 @@ export const getResponses = (dissId) => {
 };
 
 export const postReply = (originalDiss, diss) => {
-  console.log({
-    originalDiss: originalDiss,
-    diss: diss,
-  });
   return axios.post(
     `${backendUrl}/diss/reply`,
     {
       originalDiss: originalDiss,
       diss: diss,
+    },
+    {
+      headers: {
+        Authorization: getAccessToken(),
+      },
+    }
+  );
+};
+
+export const postLike = (dissId) => {
+  return axios.post(
+    `${backendUrl}/diss/like`,
+    {
+      dissId: dissId,
     },
     {
       headers: {

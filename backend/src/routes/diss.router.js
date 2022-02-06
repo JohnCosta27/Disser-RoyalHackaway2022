@@ -17,6 +17,7 @@ dissRouter.get('/', async (req, res) => {
     },
     include: {
       user: true,
+      dissesLikes: true,
     },
   });
   res.status(200).send(disses);

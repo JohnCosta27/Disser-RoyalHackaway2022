@@ -12,7 +12,13 @@ const DissContainer = () => {
       <div className="w-4/5 grid grid-cols-3 gap-2 items-center p-4">
         <Feed />
         {disses.map((diss) => (
-          <Diss key={diss.id} id={diss.id} diss={diss.diss} name={diss.user.username} />
+          <Diss
+            key={diss.id}
+            id={diss.id}
+            diss={diss.diss}
+            name={diss.user.username}
+            likes={diss.dissesLikes.length}
+          />
         ))}
       </div>
     </div>
