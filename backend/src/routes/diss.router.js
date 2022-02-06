@@ -36,6 +36,7 @@ dissRouter.get('/replies', async (req, res) => {
       },
       include: {
         user: true,
+        dissesLikes: true,
       },
     });
 
@@ -95,12 +96,8 @@ dissRouter.post('/like', authenticateJWT, async (req, res) => {
         dissId: req.body.dissId,
         userId: jwtToken.id,
       },
-      include: {
-        user: true,
-        dissesLikes: true,
-      },
     });
-    emitter.emit('new-diss-like', data);
+    emitter.emit('new-diss-like', newLike);
     res.status(200).send(newLike);
   } catch (error) {
     console.log(error);
@@ -132,6 +129,7 @@ const getResponses = async (dissId, responses) => {
     },
     include: {
       user: true,
+      dissesLikes: true,
     },
   });
   return newResponses;

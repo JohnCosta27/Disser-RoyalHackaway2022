@@ -8,6 +8,8 @@ const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [replies, setReplies] = useState([]);
 
+  console.log(replies);
+
   const getResponsesHandle = () => {
     getResponses(searchParams.get('dissId')).then((response) => {
       setReplies(response.data);
@@ -22,9 +24,13 @@ const ResponseView = () => {
     if (replies.hasOwnProperty('original')) {
       return (
         <Diss
+          id={replies.original.id}
           diss={replies.original.diss}
           name={replies.original.user.username}
-          className="col-span-2 pointer-events-none"
+          datetime={replies.original.timestamp}
+          likes={replies.original.dissesLikes.length}
+          onLike={getResponsesHandle}
+          className="col-span-2"
         />
       );
     }
@@ -34,7 +40,15 @@ const ResponseView = () => {
   const getReplies = () => {
     if (replies.hasOwnProperty('replies')) {
       return replies.replies.map((reply) => (
-        <Diss key={reply.id} id={reply.id} diss={reply.diss} name={reply.user.username} />
+        <Diss
+          key={reply.id}
+          id={reply.id}
+          diss={reply.diss}
+          name={reply.user.username}
+          datetime={reply.timestamp}
+          likes={reply.dissesLikes.length}
+          onLike={getResponsesHandle}
+        />
       ));
     }
     return <></>;
