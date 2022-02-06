@@ -18,7 +18,7 @@ const DissState = ({ children }) => {
   };
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5005/');
+    const ws = new WebSocket('ws://ventur.live:5005/');
     ws.addEventListener('open', (e) => {
       console.log(e);
     });

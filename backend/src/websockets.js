@@ -34,15 +34,6 @@ const initServer = (port, emitter) => {
     ws.send('something');
   });
 
-  const interval = setInterval(() => {
-    wss.clients.forEach((ws) => {
-      if (ws.isAlive === false) return ws.terminate();
-
-      ws.isAlive = false;
-      ws.ping();
-    });
-  }, 30000);
-
   wss.on('close', function close() {
     clearInterval(interval);
   });
