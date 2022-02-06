@@ -3,6 +3,7 @@ import { getDisses } from '../../api/ApliClient';
 
 const DissContext = createContext();
 const wsUrl = 'ws://localhost:5005/';
+//const wsUrl = 'ws://ventur.live:5005/';
 
 export const useDisses = () => {
   return useContext(DissContext);

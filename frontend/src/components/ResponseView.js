@@ -8,8 +8,6 @@ const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [replies, setReplies] = useState([]);
 
-  console.log(replies);
-
   const getResponsesHandle = () => {
     getResponses(searchParams.get('dissId')).then((response) => {
       setReplies(response.data);
@@ -17,7 +15,9 @@ const ResponseView = () => {
   };
 
   useEffect(() => {
-    getResponsesHandle();
+    setInterval(() => {
+      getResponsesHandle();
+    }, 500);
   }, [searchParams.get('dissId')]);
 
   const getOriginal = () => {
