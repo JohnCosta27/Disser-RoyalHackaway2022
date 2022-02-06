@@ -1,11 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const EventEmitter = require('events');
 
 const dissRouter = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const { authenticateJWT } = require('../Util');
 
 const prisma = new PrismaClient();
+
+const emitter = new EventEmitter();
 
 dissRouter.get('/', async (req, res) => {
   const disses = await prisma.disses.findMany({
@@ -46,12 +49,14 @@ dissRouter.post('/create', authenticateJWT, async (req, res) => {
   const token = authHeader.split(' ')[1];
   const jwtToken = jwt.decode(token);
 
+  const data = {
+    diss: req.body.diss,
+    userId: jwtToken.id,
+  };
   const newDiss = await prisma.disses.create({
-    data: {
-      diss: req.body.diss,
-      userId: jwtToken.id,
-    },
+    data: data,
   });
+  myEmitter.emit('new-diss', data);
   res.status(200).send(newDiss);
 });
 
@@ -59,15 +64,15 @@ dissRouter.post('/reply', authenticateJWT, async (req, res) => {
   const authHeader = req.headers.authorization;
   const token = authHeader.split(' ')[1];
   const jwtToken = jwt.decode(token);
-
+  const data = {
+    diss: req.body.diss,
+    userId: jwtToken.id,
+    originalDiss: req.body.originalDiss,
+  };
   const newResponseDiss = await prisma.disses.create({
-    data: {
-      diss: req.body.diss,
-      userId: jwtToken.id,
-      originalDiss: req.body.originalDiss,
-    },
+    data: data,
   });
-
+  emitter.emit('new-diss-reply', data);
   res.status(200).send(newResponseDiss);
 });
 
@@ -120,4 +125,4 @@ const getResponses = async (dissId, responses) => {
   return newResponses;
 };
 
-module.exports = dissRouter;
+module.exports = { dissRouter, emitter };
