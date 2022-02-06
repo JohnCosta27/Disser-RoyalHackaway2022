@@ -46,6 +46,10 @@ const initServer = (port, emitter) => {
     broadcast(wss, { 'new-diss-reply': diss });
     console.log('new diss reply broadcasted');
   });
+  emitter.on('new-diss-like', (diss) => {
+    broadcast(wss, { 'new-diss-like': diss });
+    console.log('new diss like broadcasted');
+  });
   return wss;
 };
 

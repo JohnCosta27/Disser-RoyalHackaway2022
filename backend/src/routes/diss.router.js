@@ -75,6 +75,10 @@ dissRouter.post('/reply', authenticateJWT, async (req, res) => {
   };
   const newResponseDiss = await prisma.disses.create({
     data: data,
+    include: {
+      user: true,
+      dissesLikes: true,
+    },
   });
   emitter.emit('new-diss-reply', data);
   res.status(200).send(newResponseDiss);
@@ -91,8 +95,12 @@ dissRouter.post('/like', authenticateJWT, async (req, res) => {
         dissId: req.body.dissId,
         userId: jwtToken.id,
       },
+      include: {
+        user: true,
+        dissesLikes: true,
+      },
     });
-
+    emitter.emit('new-diss-like', data);
     res.status(200).send(newLike);
   } catch (error) {
     console.log(error);

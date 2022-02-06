@@ -24,10 +24,20 @@ const DissState = ({ children }) => {
     });
 
     ws.addEventListener('message', (e) => {
-      const newDiss = JSON.parse(e.data);
-      let newDisses = [newDiss.newDiss, ...refDisses.current];
-      refDisses.current = newDisses;
-      setDisses(newDisses);
+      const newData = JSON.parse(e.data);
+      if('new-diss' in newData) {
+        let newDisses = [newData.newDiss, ...refDisses.current];
+        refDisses.current = newDisses;
+        setDisses(newDisses);
+      } else if('new-diss-reply' in newData){
+        // TODO:...
+      } else if('new-diss-like' in newData){
+        // FIXME:...
+        refDisses.current.find(x => x.id = newData.diss.id).dissesLikes = newData.likes;
+        setDisses(refDisses.current);
+      }
+      
+      
     });
     getDissesHandle();
   }, []);
