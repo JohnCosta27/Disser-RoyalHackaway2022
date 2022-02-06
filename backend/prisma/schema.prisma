@@ -16,6 +16,7 @@ model users {
   username    String        @unique
   disses      disses[]
   dissesLikes dissesLikes[]
+  erTags      userTags[]
 }
 
 model disses {
@@ -28,9 +29,18 @@ model disses {
   disses       disses?       @relation("dissesTodisses", fields: [originalDiss], references: [id])
   originalDiss String?
   dissesLikes  dissesLikes[]
+  userTags      userTags[]
 }
 
 model dissesLikes {
+  id     String @id @default(uuid())
+  dissId String
+  diss   disses @relation(fields: [dissId], references: [id])
+  userId String
+  user   users  @relation(fields: [userId], references: [id])
+}
+
+model userTags {
   id     String @id @default(uuid())
   dissId String
   diss   disses @relation(fields: [dissId], references: [id])
