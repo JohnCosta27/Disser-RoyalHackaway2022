@@ -58,6 +58,15 @@ const registerUser = async (characteristics) => {
 	let response = await axios.post(process.env.DOMAIN + 'auth/register', {
 		username: characteristics.username,
 		email: characteristics.username.replace(" ", "") + "@gmail.com"
+	}, {
+		headers: {
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:96.0) Gecko/20100101 Firefox/96.0",
+			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+			"Accept-Language": "en-US,en;q=0.5",
+			"Upgrade-Insecure-Requests": "1",
+			"Pragma": "no-cache",
+			"Cache-Control": "no-cache"
+		}
 	}).catch(err => console.error(err));
 
 	return response;
@@ -72,7 +81,15 @@ const registerUser = async (characteristics) => {
 const loginUser = async (characteristics) => {
 	let response = await axios.post(process.env.DOMAIN + 'auth/login', {
 		username: characteristics.username
-	}).catch(err => console.error(err));
+	}, {
+		headers: {
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:96.0) Gecko/20100101 Firefox/96.0",
+			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+			"Accept-Language": "en-US,en;q=0.5",
+			"Upgrade-Insecure-Requests": "1",
+			"Pragma": "no-cache",
+			"Cache-Control": "no-cache"
+		}}).catch(err => console.error(err));
 
 	return response;
 };
@@ -100,6 +117,7 @@ const sendDiss = async (diss, bearer, replyID) => {
 
 const massLogin = async (p, max) => {
 	for (x of p.slice(0, max)) {
+		await registerUser(x);
 		let res = await loginUser(x);
 		x.bearer = res.data.token;
 		console.log(x.bearer);
@@ -119,17 +137,16 @@ const sendRandomDiss = async (max) => {
 	sendDiss(diss, bot.bearer);
 };
 const monitorWebsocket = async () => {
-	const ws = new WebSocket('ws://localhost:5005/');
+	const ws = new WebSocket('ws://ventur.live:5005/');
 
 	ws.on('open', function open() {
-		massLogin(prompts, 10);
-		for (let i = 0; i < 10; i++) {
-			sendRandomDiss(5);
-		}
+		massLogin(prompts, 15);
+		sendRandomDiss(15);
+		sendRandomDiss(15);
 	});
 
 	ws.on('message', async (data) => {
-		/*{
+		/* {
 
 			"newDiss":{
 
@@ -161,26 +178,28 @@ const monitorWebsocket = async () => {
 
 			}
 
-		}*/
-		try{
+		} */
+		try {
 			data = JSON.parse(data);
-		} catch(err){
+		} catch (err) {
 			console.log("json invalid in ws");
 		}
-		
+
 		console.log('received: %s', data.newDiss);
 		if ('newDiss' in data) {
 			//console.log('NEW DISS IN DATA!');
 			let bot = prompts[Math.floor(Math.random() * 10)];
 			let diss = '';
 			if (data.originalDiss != null) {
-				diss = await generateDiss(bot, [{text: data.newDiss.originalDiss.diss, username: data.newDiss.originalDiss.user.username}, {text: data.newDiss.diss, username: data.newDiss.user.username}]);
+				diss = await generateDiss(bot, [{ text: data.newDiss.originalDiss.diss, username: data.newDiss.originalDiss.user.username }, { text: data.newDiss.diss, username: data.newDiss.user.username }]);
 			} else {
-				diss = await generateDiss(bot, [{text: data.newDiss.diss, username: data.newDiss.user.username}]);
+				diss = await generateDiss(bot, [{ text: data.newDiss.diss, username: data.newDiss.user.username }]);
 			}
 			console.log('diss: %s', diss);
-			if(diss != "" && diss != data.newDiss.diss){
-				await sendDiss(diss, bot.bearer, data.newDiss.id);
+			if (diss != "" && diss != data.newDiss.diss) {
+				setTimeout(async () => {
+					await sendDiss(diss, bot.bearer, data.newDiss.id);
+				}, 6000);
 			}
 		}
 
