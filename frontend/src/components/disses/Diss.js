@@ -72,12 +72,12 @@ const Diss = ({
           </div>
         </div>
         <div
-          className="w-full flex justify-center items-center"
+          className="w-full flex justify-center items-center hover:bg-green-200 transition-all"
           onClick={() => navigate(`/response?dissId=${id}`)}>
           <div className="mx-2">
             <ShareIcon className="flex w-full h-6 justify-start" />
           </div>
-          <p className="text-xl text-green-500 font-bold">Replies: {dissResponses}</p>
+          <p className="text-xl text-green-500 font-bold">Replies: {dissResponses} </p>
         </div>
       </div>
     </div>
