@@ -35,7 +35,6 @@ const DissState = ({ children }) => {
 
       if (newData.hasOwnProperty('newDiss')) {
         let newDisses = [newData.newDiss, ...refDisses.current];
-        console.log(newDisses);
         refDisses.current = newDisses;
         setDisses(newDisses);
       } else if (newData.hasOwnProperty('new-diss-reply')) {

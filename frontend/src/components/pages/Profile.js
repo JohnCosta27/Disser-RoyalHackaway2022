@@ -10,6 +10,10 @@ const Profile = () => {
   const [disses, setDisses] = useState([]);
 
   useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = () => {
     getUser(searchParams.get('userId')).then((response) => {
       let disses = response.data.disses.sort((a, b) => {
         new Date(b.timestamp) - new Date(a.timestamp);
@@ -17,7 +21,7 @@ const Profile = () => {
       setDisses(disses);
       setUser(response.data);
     });
-  }, []);
+  };
 
   const getLikes = (dissId) => {
     let count = 0;
@@ -47,6 +51,7 @@ const Profile = () => {
               diss={diss.diss}
               name={user.username}
               likes={getLikes(diss.id)}
+              onLike={() => getUserData()}
               datetime={diss.timestamp}
             />
           ))}
