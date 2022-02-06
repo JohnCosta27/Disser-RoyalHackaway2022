@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import DissState, { useDisses } from "../state/DissState";
-import Diss from "./Diss";
-import Feed from "./Feed";
+import React, { useState, useEffect } from 'react';
+import DissState, { useDisses } from '../state/DissState';
+import Diss from './Diss';
+import Feed from './Feed';
 
 const DissContainer = () => {
   const { disses } = useDisses();
-
-  console.log(disses);
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-snow-storm-100">
@@ -22,6 +20,7 @@ const DissContainer = () => {
             name={diss.user.username}
             likes={diss.dissesLikes.length}
             datetime={diss.timestamp}
+            newDiss={diss.newDiss}
           />
         ))}
       </div>

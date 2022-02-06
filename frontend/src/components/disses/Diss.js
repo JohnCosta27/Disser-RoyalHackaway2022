@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { ShareIcon } from '@heroicons/react/solid';
@@ -6,8 +6,19 @@ import { HeartIcon } from '@heroicons/react/outline';
 import { postLike } from '../../api/ApliClient';
 import moment from 'moment';
 
-const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike }) => {
+const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike, newDiss }) => {
   const navigate = useNavigate();
+
+  const [border, setBorder] = useState('');
+
+  useEffect(() => {
+    if (newDiss) {
+      setBorder('border-4 border-orange-500');
+      setTimeout(() => {
+        setBorder('border-0');
+      }, 2000);
+    }
+  }, []);
 
   const handleLike = () => {
     postLike(id).then((response) => {
@@ -21,8 +32,9 @@ const Diss = ({ id, name, diss, likes, datetime, userId, className, onLike }) =>
   return (
     <div
       className={clsx(
-        'w-full h-64 flex flex-col shadow-lg rounded bg-white p-4 cursor-pointer',
-        className
+        'transition-all w-full h-64 flex flex-col shadow-lg rounded p-4 bg-white cursor-pointer',
+        className,
+        border
       )}>
       <div className="w-full">
         <div className="flex justify-between">

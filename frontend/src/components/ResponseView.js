@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { getResponses } from "../api/ApliClient";
-import Diss from "./disses/Diss";
-import FeedReply from "./disses/FeedReply";
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getResponses } from '../api/ApliClient';
+import Diss from './disses/Diss';
+import FeedReply from './disses/FeedReply';
 
 const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [replies, setReplies] = useState([]);
 
-  console.log(replies);
-
   const getResponsesHandle = () => {
-    getResponses(searchParams.get("dissId")).then((response) => {
+    getResponses(searchParams.get('dissId')).then((response) => {
       setReplies(response.data);
     });
   };
@@ -24,7 +22,7 @@ const ResponseView = () => {
   }, [searchParams.get('dissId')]);
 
   const getOriginal = () => {
-    if (replies.hasOwnProperty("original")) {
+    if (replies.hasOwnProperty('original')) {
       return (
         <Diss
           id={replies.original.id}
@@ -42,7 +40,7 @@ const ResponseView = () => {
   };
 
   const getReplies = () => {
-    if (replies.hasOwnProperty("replies")) {
+    if (replies.hasOwnProperty('replies')) {
       return replies.replies.map((reply) => (
         <Diss
           key={reply.id}
