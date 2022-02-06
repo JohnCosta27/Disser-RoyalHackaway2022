@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getResponses } from '../api/ApliClient';
 import Diss from './disses/Diss';
 import FeedReply from './disses/FeedReply';
+import TopBar from './TopBar';
 
 const ResponseView = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -58,18 +59,21 @@ const ResponseView = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex justify-center bg-snow-storm-100">
-      <div className="w-3/4 h-full p-4">
-        <div className="w-full h-full grid grid-cols-3 gap-4">
-          <FeedReply className="col-span-1" refresh={getResponsesHandle} />
-          {getOriginal()}
-          <div className="h-36 col-span-3 flex items-end">
-            <h1 className="text-5xl">Replies</h1>
+    <>
+      <TopBar />
+      <div className="w-full min-h-screen flex justify-center bg-snow-storm-100">
+        <div className="w-3/4 h-full p-4">
+          <div className="w-full h-full grid grid-cols-3 gap-4">
+            <FeedReply className="col-span-1" refresh={getResponsesHandle} />
+            {getOriginal()}
+            <div className="h-36 col-span-3 flex items-end">
+              <h1 className="text-5xl">Replies</h1>
+            </div>
+            {getReplies()}
           </div>
-          {getReplies()}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default ResponseView;

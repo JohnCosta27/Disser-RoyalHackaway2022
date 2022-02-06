@@ -1,7 +1,18 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../img/Ventur.png';
+import clsx from 'clsx';
 
 const TopBar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const getCurrentLocation = (text) => {
+    if (text == '/' && location.pathname == '/') {
+      return 'text-blue-500';
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col">
       <nav className="px-4 flex justify-between bg-white h-16 border-b-2">
@@ -11,12 +22,15 @@ const TopBar = () => {
           </li>
         </ul>
 
-        <ul className="flex items-center">
-          <li>
-            <input
-              type="text"
-              className="w-full rounded bg-snow-storm-100 border-2 border-purple-500 p-2 h-12 text-xl transition-all"
-              placeholder="Search..."></input>
+        <ul className="flex items-center gap-4">
+          <li onClick={() => navigate('/')}>
+            <p
+              className={clsx(
+                'text-2xl font-bold hover:text-blue-500 transition-all cursor-pointer',
+                getCurrentLocation('/')
+              )}>
+              Home
+            </p>
           </li>
         </ul>
 
