@@ -10,11 +10,13 @@ const TopBar = () => {
   const getCurrentLocation = (text) => {
     if (text == '/' && location.pathname == '/') {
       return 'text-blue-500';
+    } else if (text == '/profile' && location.pathname == '/profile') {
+      return 'text-blue-500';
     }
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex flex-col w-full">
       <nav className="px-4 flex justify-between bg-white h-16 border-b-2">
         <ul className="flex items-center">
           <li className="h-16 w-16">
@@ -30,6 +32,15 @@ const TopBar = () => {
                 getCurrentLocation('/')
               )}>
               Home
+            </p>
+          </li>
+          <li onClick={() => navigate(`/profile?userId=${localStorage.getItem('ID')}`)}>
+            <p
+              className={clsx(
+                'text-2xl font-bold hover:text-blue-500 transition-all cursor-pointer',
+                getCurrentLocation('/profile')
+              )}>
+              Profile
             </p>
           </li>
         </ul>

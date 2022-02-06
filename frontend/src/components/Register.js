@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { postRegister } from '../api/ApliClient';
-import { setAccessToken } from '../api/TokenHandler';
+import { setAccessToken, setUserId } from '../api/TokenHandler';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -14,6 +14,7 @@ const Register = () => {
     postRegister(username, email).then((response) => {
       console.log(response);
       setAccessToken(response.data.token);
+      setUserId(response.data.id);
       navigate('/');
     });
   };

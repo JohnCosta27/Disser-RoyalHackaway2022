@@ -33,7 +33,7 @@ const ResponseView = () => {
           userId={replies.original.user.id}
           likes={replies.original.dissesLikes.length}
           onLike={getResponsesHandle}
-          className="col-span-2"
+          className="col-span-1"
         />
       );
     }
@@ -62,11 +62,11 @@ const ResponseView = () => {
     <>
       <TopBar />
       <div className="w-full min-h-screen flex justify-center bg-snow-storm-100">
-        <div className="w-3/4 h-full p-4">
-          <div className="w-full h-full grid grid-cols-3 gap-4">
-            <FeedReply className="col-span-1" refresh={getResponsesHandle} />
+        <div className="lg:w-3/4 sm:w-full h-full lg:p-4 sm:p-2">
+          <div className="w-full h-full grid sm:grid-cols-1 lg:grid-cols-2 gap-4 p-2">
+            <FeedReply className="md:col-span-1" refresh={getResponsesHandle} />
             {getOriginal()}
-            <div className="h-36 col-span-3 flex items-end">
+            <div className="h-36 lg:col-span-2 sm:col-span-1 flex items-end">
               <h1 className="text-5xl">Replies</h1>
             </div>
             {getReplies()}
