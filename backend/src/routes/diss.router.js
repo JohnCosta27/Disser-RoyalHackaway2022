@@ -79,6 +79,8 @@ dissRouter.post('/create', authenticateJWT, async (req, res) => {
         dissesLikes: true,
       },
     });
+    const newHash = await checkHashtags(newDiss);
+    console.log(newHash);
     emitter.emit('new-diss', newDiss);
     res.status(200).send(newDiss);
   } catch (error) {
@@ -144,6 +146,16 @@ dissRouter.get('/likes', authenticateJWT, async (req, res) => {
   }
 });
 
+dissRouter.get('/hashtags', authenticateJWT, async (req, res) => {
+  try {
+    const hashtags = await prisma.hashtags.findMany({});
+    res.status(200).send(hashtags);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: 'There has been an error' });
+  }
+});
+
 const getResponses = async (dissId, responses) => {
   try {
     const newResponses = await prisma.disses.findMany({
@@ -159,6 +171,28 @@ const getResponses = async (dissId, responses) => {
       },
     });
     return newResponses;
+  } catch (error) {
+    res.status(400).send({ error: error });
+  }
+};
+
+const checkHashtags = async (diss) => {
+  try {
+    const dissText = diss.diss;
+    const dissTextSplit = dissText.split(' ');
+    for (let word of dissTextSplit) {
+      if (word.charAt('#') && word.length >= 2) {
+        console.log('FOUND HASHTAG');
+        console.log(word);
+        const newHastag = await prisma.hashtags.create({
+          data: {
+            dissId: diss.id,
+            hashtag: word.slice(1),
+          },
+        });
+        return newHastag;
+      }
+    }
   } catch (error) {
     res.status(400).send({ error: error });
   }

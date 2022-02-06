@@ -30,6 +30,7 @@ const DissState = ({ children }) => {
 
       if (newData.hasOwnProperty('newDiss')) {
         newData.newDiss.newDiss = true;
+        newData.newDiss.dissesResponses = 0;
 
         for (let d of refDisses.current) {
           d.newDiss = false;

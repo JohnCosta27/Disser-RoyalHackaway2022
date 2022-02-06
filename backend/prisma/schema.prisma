@@ -29,7 +29,8 @@ model disses {
   disses       disses?       @relation("dissesTodisses", fields: [originalDiss], references: [id])
   originalDiss String?
   dissesLikes  dissesLikes[]
-  userTags      userTags[]
+  userTags     userTags[]
+  hashtags     hashtags[]
 }
 
 model dissesLikes {
@@ -46,4 +47,11 @@ model userTags {
   diss   disses @relation(fields: [dissId], references: [id])
   userId String
   user   users  @relation(fields: [userId], references: [id])
+}
+
+model hashtags {
+  id      String @id @default(uuid())
+  hashtag String
+  dissId  String
+  diss    disses @relation(fields: [dissId], references: [id])
 }
