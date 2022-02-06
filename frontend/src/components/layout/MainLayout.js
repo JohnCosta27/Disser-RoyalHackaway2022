@@ -1,6 +1,6 @@
-import React from 'react';
-import DissContainer from '../disses/DissContainer';
-import DissState from '../state/DissState';
+import React from "react";
+import DissContainer from "../disses/DissContainer";
+import DissState from "../state/DissState";
 
 const MainLayout = () => {
   return (

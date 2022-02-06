@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import DissState, { useDisses } from '../state/DissState';
-import Diss from './Diss';
-import Feed from './Feed';
+import React, { useState, useEffect } from "react";
+import DissState, { useDisses } from "../state/DissState";
+import Diss from "./Diss";
+import Feed from "./Feed";
 
 const DissContainer = () => {
   const { disses } = useDisses();
