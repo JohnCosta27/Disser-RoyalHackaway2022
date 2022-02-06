@@ -8,6 +8,7 @@ import MainLayout from './layout/MainLayout';
 import Profile from './pages/Profile';
 import { hasValidAccessToken } from '../api/TokenHandler';
 import ProtectedRoute from './ProtectedRoute';
+import Register from "./Register";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

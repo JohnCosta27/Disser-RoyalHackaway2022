@@ -1,5 +1,11 @@
-import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
-import { getDisses } from '../../api/ApliClient';
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
+import { getDisses } from "../../api/ApliClient";
 
 const DissContext = createContext();
 const wsUrl = 'ws://localhost:5005/';
@@ -21,23 +27,23 @@ const DissState = ({ children }) => {
 
   useEffect(() => {
     const ws = new WebSocket(wsUrl);
-    ws.addEventListener('open', (e) => {
+    ws.addEventListener("open", (e) => {
       console.log(e);
     });
 
-    ws.addEventListener('message', (e) => {
+    ws.addEventListener("message", (e) => {
       const newData = JSON.parse(e.data);
-      if (newData.hasOwnProperty('newDiss')) {
+      if (newData.hasOwnProperty("newDiss")) {
         let newDisses = [newData.newDiss, ...refDisses.current];
         refDisses.current = newDisses;
         setDisses(newDisses);
-      } else if (newData.hasOwnProperty('new-diss-reply')) {
+      } else if (newData.hasOwnProperty("new-diss-reply")) {
         // TODO:...
-      } else if (newData.hasOwnProperty('new-diss-like')) {
+      } else if (newData.hasOwnProperty("new-diss-like")) {
         let newDisses = [...refDisses.current];
         for (let diss of refDisses.current) {
-          if (diss.id == newData['new-diss-like'].dissId) {
-            diss.dissesLikes.push(newData['new-diss-like']);
+          if (diss.id == newData["new-diss-like"].dissId) {
+            diss.dissesLikes.push(newData["new-diss-like"]);
             break;
           }
         }
@@ -49,7 +55,9 @@ const DissState = ({ children }) => {
   }, []);
 
   return (
-    <DissContext.Provider value={{ disses, getDissesHandle }}>{children}</DissContext.Provider>
+    <DissContext.Provider value={{ disses, getDissesHandle }}>
+      {children}
+    </DissContext.Provider>
   );
 };
 export default DissState;

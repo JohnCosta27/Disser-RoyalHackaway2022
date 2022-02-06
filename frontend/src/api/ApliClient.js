@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { getAccessToken } from './TokenHandler';
+import axios from "axios";
+import { getAccessToken } from "./TokenHandler";
 
-export const backendUrl = 'http://localhost:5000';
+export const backendUrl = "http://localhost:5000";
 //export const backendUrl = 'http://ventur.live:5000';
 
 export const getDisses = () => {
