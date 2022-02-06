@@ -1,10 +1,8 @@
 const WebSocket = require('ws');
-const events = require('events');
-
-let websocketConnections = [];
 
 
-const initServer = (port) => {
+
+const initServer = (port, emitter) => {
 	const wss = new WebSocket.Server({
 		port: port,
 		perMessageDeflate: {
@@ -53,6 +51,15 @@ const initServer = (port) => {
 	wss.on('close', function close() {
 		clearInterval(interval);
 	});
+
+	emitter.on('new-diss', (diss) => {
+		broadcast(wss, {"new-diss": diss});
+		console.log('new diss broadcasted');
+	});
+	emitter.on('new-diss-reply', (diss) => {
+		broadcast(wss, {"new-diss-reply": diss});
+		console.log('new diss reply broadcasted');
+	});
 	return wss;
 };
 
@@ -61,7 +68,7 @@ const heartbeat = (ws) => {
 }
 
 
-const broadcast = (msg) => {
+const broadcast = (wss, msg) => {
 	wss.clients.forEach((client) => {
 		if (client.readyState === WebSocket.OPEN) {
 			client.send(msg);
