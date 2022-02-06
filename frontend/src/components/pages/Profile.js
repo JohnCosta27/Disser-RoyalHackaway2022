@@ -42,14 +42,14 @@ const Profile = () => {
           <h1 className="text-7xl font-bold text-center">{user.username}</h1>
           <br />
           <h2 className="text-5xl text-green-500 text-center">
-            {user.disses.length} disses written
+            {user.disses.length} ventures written
           </h2>
           <br />
           <h2 className="text-5xl text-red-500 text-center">
             {user.dissesLikes.length} likes given
           </h2>
           <br />
-          <h3 className="text-5xl text-center">Disses</h3>
+          <h3 className="text-5xl text-center">Ventures</h3>
           <div className="w-full grid grid-cols-1 gap-4 p-4">
             {disses.map((diss) => (
               <Diss

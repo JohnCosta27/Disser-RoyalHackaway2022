@@ -15,6 +15,8 @@ const ResponseView = () => {
     });
   };
 
+  console.log(replies);
+
   useEffect(() => {
     const interval = setInterval(() => {
       getResponsesHandle();
@@ -33,6 +35,7 @@ const ResponseView = () => {
           userId={replies.original.user.id}
           likes={replies.original.dissesLikes.length}
           onLike={getResponsesHandle}
+          dissResponses={replies.replies.length}
           className="col-span-1"
         />
       );
@@ -51,6 +54,7 @@ const ResponseView = () => {
           name={reply.user.username}
           datetime={reply.timestamp}
           likes={reply.dissesLikes.length}
+          dissResponses={reply.dissesResponses}
           onLike={getResponsesHandle}
         />
       ));

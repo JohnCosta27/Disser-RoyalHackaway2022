@@ -11,82 +11,103 @@ const prisma = new PrismaClient();
 const emitter = new EventEmitter();
 
 dissRouter.get('/', async (req, res) => {
-  let disses = await prisma.disses.findMany({
-    where: {
-      originalDiss: null,
-    },
-    orderBy: {
-      timestamp: 'desc',
-    },
-    include: {
-      user: true,
-      dissesLikes: true,
-    },
-  });
-  for (let d of disses) {
-    const responses = await getResponses(d.id, []);
-    d.dissesResponses = responses.length;
-  }
-  res.status(200).send(disses);
-});
-
-dissRouter.get('/replies', async (req, res) => {
-  if (req.query.dissId == undefined) {
-    res.status(400).send({ error: 'Diss ID cannot be null' });
-  } else {
-    const diss = await prisma.disses.findFirst({
+  try {
+    let disses = await prisma.disses.findMany({
       where: {
-        id: req.query.dissId,
+        originalDiss: null,
+      },
+      orderBy: {
+        timestamp: 'desc',
       },
       include: {
         user: true,
         dissesLikes: true,
       },
     });
+    for (let d of disses) {
+      const responses = await getResponses(d.id, []);
+      d.dissesResponses = responses.length;
+    }
+    res.status(200).send(disses);
+  } catch (error) {
+    res.status(400).send({ error: error });
+  }
+});
 
-    const replies = await getResponses(req.query.dissId, []);
-    res.status(200).send({ original: diss, replies: replies });
+dissRouter.get('/replies', async (req, res) => {
+  try {
+    if (req.query.dissId == undefined) {
+      res.status(400).send({ error: 'Diss ID cannot be null' });
+    } else {
+      const diss = await prisma.disses.findFirst({
+        where: {
+          id: req.query.dissId,
+        },
+        include: {
+          user: true,
+          dissesLikes: true,
+        },
+      });
+
+      let replies = await getResponses(req.query.dissId, []);
+      for (let d of replies) {
+        const responses = await getResponses(d.id, []);
+        d.dissesResponses = responses.length;
+      }
+
+      res.status(200).send({ original: diss, replies: replies });
+    }
+  } catch (error) {
+    res.status(400).send({ error: error });
   }
 });
 
 dissRouter.post('/create', authenticateJWT, async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const token = authHeader.split(' ')[1];
-  const jwtToken = jwt.decode(token);
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    const jwtToken = jwt.decode(token);
 
-  const data = {
-    diss: req.body.diss,
-    userId: jwtToken.id,
-  };
-  const newDiss = await prisma.disses.create({
-    data: data,
-    include: {
-      user: true,
-      dissesLikes: true,
-    },
-  });
-  emitter.emit('new-diss', newDiss);
-  res.status(200).send(newDiss);
+    const data = {
+      diss: req.body.diss,
+      userId: jwtToken.id,
+    };
+    const newDiss = await prisma.disses.create({
+      data: data,
+      include: {
+        user: true,
+        dissesLikes: true,
+      },
+    });
+    emitter.emit('new-diss', newDiss);
+    res.status(200).send(newDiss);
+  } catch (error) {
+    res.status(400).send({ error: error });
+  }
 });
 
 dissRouter.post('/reply', authenticateJWT, async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const token = authHeader.split(' ')[1];
-  const jwtToken = jwt.decode(token);
-  const data = {
-    diss: req.body.diss,
-    userId: jwtToken.id,
-    originalDiss: req.body.originalDiss,
-  };
-  const newResponseDiss = await prisma.disses.create({
-    data: data,
-    include: {
-      user: true,
-      dissesLikes: true,
-    },
-  });
-  emitter.emit('new-diss-reply', data);
-  res.status(200).send(newResponseDiss);
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    const jwtToken = jwt.decode(token);
+    const data = {
+      diss: req.body.diss,
+      userId: jwtToken.id,
+      originalDiss: req.body.originalDiss,
+    };
+    const newResponseDiss = await prisma.disses.create({
+      data: data,
+      include: {
+        user: true,
+        dissesLikes: true,
+      },
+    });
+    emitter.emit('new-diss-reply', data);
+    res.status(200).send(newResponseDiss);
+  } catch (error) {
+    res.status(400).send({ error: error });
+  }
 });
 
 dissRouter.post('/like', authenticateJWT, async (req, res) => {
@@ -124,19 +145,23 @@ dissRouter.get('/likes', authenticateJWT, async (req, res) => {
 });
 
 const getResponses = async (dissId, responses) => {
-  const newResponses = await prisma.disses.findMany({
-    where: {
-      originalDiss: dissId,
-    },
-    orderBy: {
-      timestamp: 'desc',
-    },
-    include: {
-      user: true,
-      dissesLikes: true,
-    },
-  });
-  return newResponses;
+  try {
+    const newResponses = await prisma.disses.findMany({
+      where: {
+        originalDiss: dissId,
+      },
+      orderBy: {
+        timestamp: 'desc',
+      },
+      include: {
+        user: true,
+        dissesLikes: true,
+      },
+    });
+    return newResponses;
+  } catch (error) {
+    res.status(400).send({ error: error });
+  }
 };
 
 module.exports = { dissRouter, emitter };

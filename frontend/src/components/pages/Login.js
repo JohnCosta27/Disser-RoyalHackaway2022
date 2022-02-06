@@ -29,7 +29,7 @@ const Login = () => {
     <form
       onSubmit={submitLogin}
       className="w-full h-screen flex justify-center items-center bg-snow-storm-100 gap-2">
-      <div className="w-1/2 min-h-48 h-48 rounded shadow-lg bg-white p-4 flex flex-col gap-4">
+      <div className="md:w-1/2 sm:w-full min-h-48 h-48 rounded shadow-lg bg-white p-4 flex flex-col gap-4">
         <input
           type="text"
           className="w-full rounded bg-snow-storm-100 border-2 border-purple-500 p-2 h-12 text-xl transition-all"
@@ -41,7 +41,7 @@ const Login = () => {
           Login
         </button>
         <p className="text-lg cursor-pointer text-blue-500" onClick={() => navigate('/register')}>
-          Click here to click up
+          Click here to sign up
         </p>
       </div>
     </form>
